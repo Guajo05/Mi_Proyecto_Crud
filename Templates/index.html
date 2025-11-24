@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Tareas CRUD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input[type="text"]:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        button[type="submit"] {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            background: #f8f9fa;
+            padding: 18px 20px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        li:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+
+        .task-content {
+            flex: 1;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        a {
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        a[href*="edit"] {
+            background: #4caf50;
+            color: white;
+        }
+
+        a[href*="edit"]:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        a[href*="delete"] {
+            background: #f44336;
+            color: white;
+        }
+
+        a[href*="delete"]:hover {
+            background: #da190b;
+            transform: scale(1.05);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-size: 18px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            form {
+                flex-direction: column;
+            }
+
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .task-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📝 Mi Lista de Tareas</h1>
+        
+        <!-- Formulario para añadir tareas -->
+        <form action="/add" method="POST">
+            <input type="text" name="content" placeholder="Escribe una nueva tarea..." required>
+            <button type="submit">➕ Añadir</button>
+        </form>
+        
+        <!-- Lista de tareas -->
+        <ul>
+        {% for task in tasks %}
+            <li>
+                <span class="task-content">{{ task.content }}</span>
+                <div class="task-actions">
+                    <a href="/edit/{{ task.id }}">✏️ Editar</a>
+                    <a href="/delete/{{ task.id }}">🗑️ Eliminar</a>
+                </div>
+            </li>
+        {% else %}
+            <div class="empty-state">
+                No hay tareas. ¡Añade una para comenzar! 🎯
+            </div>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
