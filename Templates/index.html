@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tareas CRUD</title>
+    <title>Lista de Tareas - Sistema CRUD</title>
     <style>
         * {
             margin: 0;
@@ -191,7 +191,7 @@
         </form>
         
         <!-- Lista de tareas -->
-        <ul>
+        <ol type="1">
         {% for task in tasks %}
             <li>
                 <span class="task-content">{{ task.content }}</span>
@@ -205,7 +205,7 @@
                 No hay tareas. ¡Añade una para comenzar! 🎯
             </div>
         {% endfor %}
-        </ul>
+        </ol>
     </div>
 </body>
 </html>
